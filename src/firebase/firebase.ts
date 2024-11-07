@@ -1,13 +1,20 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD8-YkzUWPDU4dg30QTfwoRuG1tJUM3LgI",
-  authDomain: "codehub-79571.firebaseapp.com",
-  projectId: "codehub-79571",
-  storageBucket: "codehub-79571.firebasestorage.app",
-  messagingSenderId: "929748743398",
-  appId: "1:929748743398:web:9f5c31e260dd3c74543727",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = !getApps.length ? initializeApp(firebaseConfig) : getApp();
+
+const auth = getAuth(app);
+const firestore = getFirestore(app);
+
+export { auth, firestore, app };
